@@ -83,3 +83,52 @@ vite.svg
 # IDEs
 .vscode/
 .idea/
+
+# =========================
+# C / C++ 
+# =========================
+
+# Compiled objects
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+*.out
+
+# Debug symbols
+*.dSYM/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+compile_commands.json
+Makefile
+
+# Autotools
+aclocal.m4
+autom4te.cache/
+configure
+config.log
+config.status
+libtool
+m4/
+
+# Build directories
+bin/
+obj/
+build/
+
+# Coverage
+*.gcda
+*.gcno
+*.gcov
+
+# Temporary/editor files
+*.swp
+*.swo
+*~

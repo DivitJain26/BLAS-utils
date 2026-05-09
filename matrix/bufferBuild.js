@@ -1,4 +1,4 @@
-import { generatePaddedMatrix, generatePaddedMatrix2, printBuffer } from './bufferGenerator.js'
+import { generateComplexPaddedMatrix, generateRealPaddedMatrix, printBuffer } from './bufferGenerator.js'
 
 // row mojor
 const A_mat = [
@@ -8,6 +8,6 @@ const A_mat = [
 ];
 
 
-let buffer = generatePaddedMatrix(A_mat, 3, 3, -2, -9, 23, true);
+let buffer = generateComplexPaddedMatrix(A_mat, 3, 3, 3, 2, 0, true);
 
 printBuffer(buffer);

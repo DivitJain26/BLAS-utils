@@ -4,7 +4,7 @@
 // Output is printed as a string in the format: [1.0, 1.0, 999.0, ...]
 
 // Function to generate the padded buffer
-export function generatePaddedMatrix(A_mat, M, N, strideA1, strideA2, offsetA, isRowMajor = true) {
+export function generateComplexPaddedMatrix(A_mat, M, N, strideA1, strideA2, offsetA, isRowMajor = true) {
     // Validate inputs
     if (A_mat.length !== M) {
         throw new Error('A_mat must have M rows');
@@ -71,9 +71,71 @@ export function generatePaddedMatrix(A_mat, M, N, strideA1, strideA2, offsetA, i
     return buffer;
 }
 
+export function generateRealPaddedMatrix(A_mat, M, N, strideA1, strideA2, offsetA, isRowMajor = true) {
+    // Validate inputs
+    if (A_mat.length !== M) {
+        throw new Error('A_mat must have M rows');
+    }
+    for (let i = 0; i < M; i++) {
+        if (A_mat[i].length !== N) {
+            throw new Error(`Row ${i} must have exactly ${N} real elements`);
+        }
+    }
+
+    // Strides are now in terms of real elements (no *2)
+    const rowStride = strideA1;
+    const colStride = strideA2;
+
+    // Find the maximum position to determine buffer size
+    let maxPos = -Infinity;
+    for (let i = 0; i < M; i++) {
+        for (let j = 0; j < N; j++) {
+            let pos;
+            if (isRowMajor) {
+                // Row-major: pos = offsetA + i * rowStride + j * colStride
+                pos = offsetA + i * rowStride + j * colStride;
+            } else {
+                // Column-major: pos = offsetA + j * rowStride + i * colStride
+                pos = offsetA + j * rowStride + i * colStride;
+            }
+            maxPos = Math.max(maxPos, pos);
+        }
+    }
+
+    // Create buffer filled with padding value 999.0
+    const bufferSize = maxPos + 1;
+    if (bufferSize < 0) {
+        throw new Error('Invalid strides leading to negative buffer size');
+    }
+
+    const buffer = new Array(bufferSize).fill(999.0);
+
+    // Place the matrix elements into the buffer
+    for (let i = 0; i < M; i++) {
+        for (let j = 0; j < N; j++) {
+            let pos;
+            if (isRowMajor) {
+                pos = offsetA + i * rowStride + j * colStride;
+            } else {
+                pos = offsetA + j * rowStride + i * colStride;
+            }
+
+            const value = A_mat[i][j];
+
+            // Place if within bounds
+            if (pos >= 0 && pos < bufferSize) {
+                buffer[pos] = value;
+            } else {
+                console.warn(`Position out of bounds for A[${i}][${j}]: pos=${pos}`);
+            }
+        }
+    }
+
+    return buffer;
+}
 
 // Enhanced function: Auto-computes offsetA if passed as -1
-export function generatePaddedMatrix2(A_mat, M, N, strideA1, strideA2, offsetA = 0, isRowMajor = true, paddingMode = 'padded') {
+export function generateComplexPaddedMatrix2(A_mat, M, N, strideA1, strideA2, offsetA = 0, isRowMajor = true, paddingMode = 'padded') {
     if (A_mat.length !== M || A_mat.some(row => row.length !== 2 * N)) {
         throw new Error('Invalid A_mat dimensions');
     }

@@ -42,7 +42,7 @@ export function generateComplexPaddedMatrix(A_mat, M, N, strideA1, strideA2, off
     if (bufferSize < 0) {
         throw new Error('Invalid strides leading to negative buffer size');
     }
-    const buffer = new Array(bufferSize).fill(999.0);
+    const buffer = new Array(bufferSize).fill(0.0);
 
     // Place the matrix elements into the buffer
     for (let i = 0; i < M; i++) {

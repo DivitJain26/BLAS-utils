@@ -8,11 +8,11 @@ const A_i = [
 
 // out
 const A_o = [
-    [ -2.0, 4.0, 0.0, 4.0, 2.0, 4.0 ],
-    [ -2.0, 10.0, 1.0, 9.0, 4.0, 8.0 ]
+    [  4.0,  4.0, 4.0, 4.0, 4.0, 4.0 ],
+    [ 10.0, 10.0, 9.0, 9.0, 8.0, 8.0 ]
 ];
 
 
-let buffer = generateComplexPaddedMatrix(A_o, 2, 3, -3, -7, 13, false);
+let buffer = generateComplexPaddedMatrix(A_o, 2, 3, -7, -3, 17, false);
 
 printBuffer(buffer);

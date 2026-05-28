@@ -1,4 +1,4 @@
-const cgeru = require('../lib/base.js');
+const cgerc = require('../lib/base.js');
 const Complex64Array = require('@stdlib/array/complex64');
 const Complex64 = require( '@stdlib/complex/float32/ctor' );
 const isSameComplex64Array = require('@stdlib/assert/is-same-complex64array');
@@ -64,7 +64,7 @@ function runNdarrayTest(name, data) {
 
   const expected = new Complex64Array(data.A_out);
 
-  const out = cgeru( data.M, data.N, alpha, x, data.strideX, data.offsetX, y, data.strideY, data.offsetY, a, data.strideA1, data.strideA2, data.offsetA );
+  const out = cgerc( data.M, data.N, alpha, x, data.strideX, data.offsetX, y, data.strideY, data.offsetY, a, data.strideA1, data.strideA2, data.offsetA );
 
   const pass = isSameComplex64Array(out, a) && isSameComplex64Array(out, expected);
 
